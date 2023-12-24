@@ -1,5 +1,5 @@
-const B = require('../').Buffer
-const test = require('tape')
+import { Buffer as B } from "../Buffer.js";
+import { test } from "https://code4fukui.github.io/tape-es/tape.js";
 
 test('detect utf16 surrogate pairs', function (t) {
   const text = '\uD83D\uDE38' + '\uD83D\uDCAD' + '\uD83D\uDC4D'

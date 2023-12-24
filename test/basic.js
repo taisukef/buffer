@@ -1,5 +1,5 @@
-const B = require('../').Buffer
-const test = require('tape')
+import { Buffer as B } from "../Buffer.js";
+import { test } from "https://code4fukui.github.io/tape-es/tape.js";
 
 test('instanceof Buffer', function (t) {
   const buf = new B([1, 2])

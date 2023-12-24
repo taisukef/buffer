@@ -1,5 +1,5 @@
-const B = require('../').Buffer
-const test = require('tape')
+import { Buffer as B } from "../Buffer.js";
+import { test } from "https://code4fukui.github.io/tape-es/tape.js";
 
 test('modifying buffer created by .slice() modifies original memory', function (t) {
   const buf1 = new B(26)

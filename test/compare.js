@@ -1,5 +1,5 @@
-const B = require('../').Buffer
-const test = require('tape')
+import { Buffer as B } from "../Buffer.js";
+import { test } from "https://code4fukui.github.io/tape-es/tape.js";
 
 test('buffer.compare', function (t) {
   const b = new B(1).fill('a')

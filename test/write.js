@@ -1,6 +1,8 @@
-const B = require('../').Buffer
-const test = require('tape')
-const isnan = require('is-nan')
+import { Buffer as B } from "../Buffer.js";
+import { test } from "https://code4fukui.github.io/tape-es/tape.js";
+//import { test } from "../../tape-es/tape.js";
+//const isnan = require('is-nan')
+const isnan = isNaN;
 
 test('buffer.write string should get parsed as number', function (t) {
   const b = new B(64)
