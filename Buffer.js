@@ -8,6 +8,8 @@
 
 import { base64 } from "https://taisukef.github.io/base64-js/base64.js";
 import { ieee754 } from "https://taisukef.github.io/ieee754/ieee754.js"
+//import { Base64URL } from "https://code4fukui.github.io/Base64URL/Base64URL.js";
+import Base64URL from "https://code4fukui.github.io/urlsafe-base64/index.js";
 
 const customInspectSymbol =
   (typeof Symbol === 'function' && typeof Symbol['for'] === 'function') // eslint-disable-line dot-notation
@@ -381,6 +383,7 @@ Buffer.isEncoding = function isEncoding (encoding) {
     case 'ucs-2':
     case 'utf16le':
     case 'utf-16le':
+    case 'base64url':
       return true
     default:
       return false
@@ -469,6 +472,8 @@ function byteLength (string, encoding) {
         return len >>> 1
       case 'base64':
         return base64ToBytes(string).length
+      case 'base64url':
+        return base64UrlToBytes(string).length
       default:
         if (loweredCase) {
           return mustMatch ? -1 : utf8ToBytes(string).length // assume utf8
@@ -535,6 +540,8 @@ function slowToString (encoding, start, end) {
 
       case 'base64':
         return base64Slice(this, start, end)
+      case 'base64url':
+        return base64UrlSlice(this, start, end)
 
       case 'ucs2':
       case 'ucs-2':
@@ -862,6 +869,17 @@ function asciiWrite (buf, string, offset, length) {
 function base64Write (buf, string, offset, length) {
   return blitBuffer(base64ToBytes(string), buf, offset, length)
 }
+function base64UrlWrite (buf, string, offset, length) {
+  return blitBuffer(base64UrlToBytes(string), buf, offset, length)
+}
+
+function toUint8Array(buffer) {
+  const b = new Uint8Array(buffer.length);
+  for (let i = 0; i < buffer.length; ++i) {
+    b[i] = buffer[i];
+  }
+  return b;
+}
 
 function ucs2Write (buf, string, offset, length) {
   return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
@@ -921,6 +939,9 @@ Buffer.prototype.write = function write (string, offset, length, encoding) {
       case 'base64':
         // Warning: maxLength not taken into account in base64Write
         return base64Write(this, string, offset, length)
+      case 'base64url':
+        // Warning: maxLength not taken into account in base64Write
+        return base64UrlWrite(this, string, offset, length)
 
       case 'ucs2':
       case 'ucs-2':
@@ -948,6 +969,13 @@ function base64Slice (buf, start, end) {
     return base64.fromByteArray(buf)
   } else {
     return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+function base64UrlSlice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return Base64URL.encode(buf);
+  } else {
+    return Base64URL.encode(buf.slice(start, end))
   }
 }
 
@@ -2060,6 +2088,10 @@ function utf16leToBytes (str, units) {
 
 function base64ToBytes (str) {
   return base64.toByteArray(base64clean(str))
+}
+function base64UrlToBytes (str) {
+  //return toUint8Array(Base64URL.encode(str));
+  return Base64URL.decode(str);
 }
 
 function blitBuffer (src, dst, offset, length) {
