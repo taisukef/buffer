@@ -1829,6 +1829,14 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
   return this
 }
 
+Buffer.prototype.toUint8Array = function() { // add for browsers & Deno
+  const res = new Uint8Array(this.length);
+  for (let i = 0; i < res.length; i++) {
+    res[i] = this[i];
+  }
+  return res;
+};
+
 // CUSTOM ERRORS
 // =============
 
