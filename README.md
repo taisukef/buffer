@@ -9,7 +9,7 @@
 [standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [standard-url]: https://standardjs.com
 
-#### The buffer module from [node.js](https://nodejs.org), for the browser.
+#### The buffer module from [node.js](https://nodejs.org), for the browser / Deno.
 
 [![saucelabs][saucelabs-image]][saucelabs-url]
 
@@ -22,6 +22,12 @@ The goal is to provide an API that is 100% identical to
 [node's Buffer API](https://nodejs.org/api/buffer.html). Read the
 [official docs](https://nodejs.org/api/buffer.html) for the full list of properties,
 instance methods, and class methods that are supported.
+
+## Usage
+
+```js
+import { Buffer } from "https://taisukef.github.io/buffer/Buffer.js";
+```
 
 ## features
 
